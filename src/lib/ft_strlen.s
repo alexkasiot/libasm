@@ -11,3 +11,5 @@ ft_strlen:
 
 .done:
 	ret
+
+section .note.GNU-stack noalloc noexec

@@ -31,6 +31,64 @@ void test_ft_strlen()
 	}
 }
 
+void test_ft_strcpy()
+{
+    char dest[50];
+    
+    printf("src: %s\nstrcpy_dest:    %s|len: %zu\n", "hello", strcpy(dest, "hello"), ft_strlen(strcpy(dest, "hello")));
+    printf("ft_strcpy_dest: %s|len: %zu\n", ft_strcpy(dest, "hello"), ft_strlen(strcpy(dest, "hello")));
+    
+	printf("src: %s\nstrcpy_dest:    %s|len: %zu\n", "", strcpy(dest, ""), ft_strlen(strcpy(dest, "")));
+    printf("ft_strcpy_dest: %s|len: %zu\n", ft_strcpy(dest, ""), ft_strlen(strcpy(dest, "")));
+
+	printf("src: %s\nstrcpy_dest:    %s|len: %zu\n", "a", strcpy(dest, "a"), ft_strlen(strcpy(dest, "a")));
+    printf("ft_strcpy_dest: %s|len: %zu\n", ft_strcpy(dest, "a"), ft_strlen(strcpy(dest, "a")));
+
+	printf("src: %s\nstrcpy_dest:    %s|len: %zu\n", "hello world", strcpy(dest, "hello world"), ft_strlen(strcpy(dest, "hello world")));
+    printf("ft_strcpy_dest: %s|len: %zu\n", ft_strcpy(dest, "hello world"), ft_strlen(strcpy(dest, "hello world")));
+
+	printf("src: %s\nstrcpy_dest:    %s|len: %zu\n", "!@#$%%^", strcpy(dest, "!@#$%%^"), ft_strlen(strcpy(dest, "!@#$%%^")));
+    printf("ft_strcpy_dest: %s|len: %zu\n", ft_strcpy(dest, "!@#$%%^"), ft_strlen(strcpy(dest, "!@#$%%^")));
+
+	printf("src: %s\nstrcpy_dest:    %s|len: %zu\n", "hello\nworld", strcpy(dest, "hello\nworld"), ft_strlen(strcpy(dest, "hello\nworld")));
+    printf("ft_strcpy_dest: %s|len: %zu\n", ft_strcpy(dest, "hello\nworld"), ft_strlen(strcpy(dest, "hello\nworld")));
+
+	printf("src: %s\nstrcpy_dest:    %s|len: %zu\n", "The quick brown fox jumps over the lazy dog", strcpy(dest, "The quick brown fox jumps over the lazy dog"), ft_strlen(strcpy(dest, "The quick brown fox jumps over the lazy dog")));
+    printf("ft_strcpy_dest: %s|len: %zu\n", ft_strcpy(dest, "The quick brown fox jumps over the lazy dog"), ft_strlen(strcpy(dest, "The quick brown fox jumps over the lazy dog")));
+}
+
+void test_ft_strcmp()
+{
+	// printf("%i", strcmp("hello", "hcllo"));
+	char s1[] = "hello";
+	char s2[] = "hcllo";
+	printf("s1: %s\ns2: %s\nstrcmp:    %i\nft_strcmp: %i\n\n", s1, s2, strcmp(s1, s2), ft_strcmp(s1, s2));
+
+    char s3[] = "hello";
+    char s4[] = "hello";
+    printf("s3: %s\ns4: %s\nstrcmp:    %i\nft_strcmp: %i\n\n", s3, s4, strcmp(s3, s4), ft_strcmp(s3, s4));
+
+    char s5[] = "hello";
+    char s6[] = "hel";
+    printf("s5: %s\ns6: %s\nstrcmp:    %i\nft_strcmp: %i\n\n", s5, s6, strcmp(s5, s6), ft_strcmp(s5, s6));
+
+    char s7[] = "hel";
+    char s8[] = "hello";
+    printf("s7: %s\ns8: %s\nstrcmp:    %i\nft_strcmp: %i\n\n", s7, s8, strcmp(s7, s8), ft_strcmp(s7, s8));
+
+    char s9[] = "";
+    char s10[] = "";
+    printf("s9: %s\ns10: %s\nstrcmp:    %i\nft_strcmp: %i\n\n", s9, s10, strcmp(s9, s10), ft_strcmp(s9, s10));
+
+    char s11[] = "";
+    char s12[] = "hello";
+    printf("s11: %s\ns12: %s\nstrcmp:    %i\nft_strcmp: %i\n\n", s11, s12, strcmp(s11, s12), ft_strcmp(s11, s12));
+
+    char s13[] = "abc";
+    char s14[] = "xyz";
+    printf("s13: %s\ns14: %s\nstrcmp:    %i\nft_strcmp: %i\n", s13, s14, strcmp(s13, s14), ft_strcmp(s13, s14));
+}
+
 int main(int argc, const char* argv[])
 {
 	if (argc != 2)
@@ -41,6 +99,10 @@ int main(int argc, const char* argv[])
 
 	if (strcmp(argv[1], "ft_strlen") == 0)
 		test_ft_strlen();
+	else if (strcmp(argv[1], "ft_strcpy") == 0)
+		test_ft_strcpy();
+	else if (strcmp(argv[1], "ft_strcmp") == 0)
+		test_ft_strcmp();
 	else
 	{
 		write(1, "Usage ./test [function_name]\n", 29);
