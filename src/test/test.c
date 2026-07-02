@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "libasm.h"
 
-void test_ft_strlen()
+static void test_ft_strlen()
 {
 	printf("test \"\":\nstrlen:    %zu\nft_strlen: %zu\n\n", strlen(""), ft_strlen(""));
 	printf("test \"a\":\nstrlen:    %zu\nft_strlen: %zu\n\n", strlen("a"), ft_strlen("a"));
@@ -31,7 +31,7 @@ void test_ft_strlen()
 	}
 }
 
-void test_ft_strcpy()
+static void test_ft_strcpy()
 {
     char dest[50];
     
@@ -57,7 +57,7 @@ void test_ft_strcpy()
     printf("ft_strcpy_dest: %s|len: %zu\n", ft_strcpy(dest, "The quick brown fox jumps over the lazy dog"), ft_strlen(strcpy(dest, "The quick brown fox jumps over the lazy dog")));
 }
 
-void test_ft_strcmp()
+static void test_ft_strcmp()
 {
 	// printf("%i", strcmp("hello", "hcllo"));
 	char s1[] = "hello";
@@ -89,6 +89,30 @@ void test_ft_strcmp()
     printf("s13: %s\ns14: %s\nstrcmp:    %i\nft_strcmp: %i\n", s13, s14, strcmp(s13, s14), ft_strcmp(s13, s14));
 }
 
+static void test_ft_write_block(int fd, const char* buf, size_t count)
+{
+	size_t write_ret;
+	size_t ft_write_ret;
+	write(fd, "write:    ", 10);
+	write_ret = write(fd, buf, count);
+	write(fd, "ft_write: ", 10);
+	ft_write_ret = ft_write(fd, buf, count);
+}
+
+void test_ft_write()
+{
+	char	s1[] = "hello\n";
+	test_ft_write_block(1, s1, ft_strlen(s1));
+	test_ft_write_block(2, s1, ft_strlen(s1));
+	
+    char binary[] = {'a', 'b', '\0', 'c', '\n'};
+	test_ft_write_block(1, binary, sizeof(binary));
+    char longmsg[] = "The quick brown fox jumps over the lazy dog\n";
+	test_ft_write_block(1, longmsg, ft_strlen(longmsg));
+	test_ft_write_block(1, "", 0);
+
+}
+
 int main(int argc, const char* argv[])
 {
 	if (argc != 2)
@@ -103,6 +127,8 @@ int main(int argc, const char* argv[])
 		test_ft_strcpy();
 	else if (strcmp(argv[1], "ft_strcmp") == 0)
 		test_ft_strcmp();
+	else if (strcmp(argv[1], "ft_write") == 0)
+		test_ft_write();
 	else
 	{
 		write(1, "Usage ./test [function_name]\n", 29);
