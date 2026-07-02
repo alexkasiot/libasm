@@ -89,7 +89,7 @@ static void test_ft_strcmp()
     printf("s13: %s\ns14: %s\nstrcmp:    %i\nft_strcmp: %i\n", s13, s14, strcmp(s13, s14), ft_strcmp(s13, s14));
 }
 
-static void test_ft_write_block(int fd, const char* buf, size_t count)
+static void test_ft_write_block(int fd, const void *buf, size_t count)
 {
 	size_t write_ret;
 	size_t ft_write_ret;
@@ -121,6 +121,24 @@ void test_ft_write()
 
 }
 
+static void test_ft_read()
+{
+	size_t read_ret;
+	size_t ft_read_ret;
+	char test[100] = {0};
+	ft_write(1, "read:    ", 9);
+	read_ret = read(0, test, 100);
+	ft_write(1, test, ft_strlen(test));
+	dprintf(1, "read_ret:    %zu\n", read_ret);
+
+	memset(test, 0, 100);
+	
+	ft_write(1, "ft_read: ", 9);
+	ft_read_ret = ft_read(0, test, 100);
+	ft_write(1, test, ft_strlen(test));
+	dprintf(1, "ft_read_ret: %zu\n", ft_read_ret);
+}
+
 int main(int argc, const char* argv[])
 {
 	if (argc != 2)
@@ -137,6 +155,8 @@ int main(int argc, const char* argv[])
 		test_ft_strcmp();
 	else if (strcmp(argv[1], "ft_write") == 0)
 		test_ft_write();
+	else if (strcmp(argv[1], "ft_read") == 0)
+		test_ft_read();
 	else
 	{
 		write(1, "Usage ./test [function_name]\n", 29);
