@@ -93,22 +93,30 @@ static void test_ft_write_block(int fd, const char* buf, size_t count)
 {
 	size_t write_ret;
 	size_t ft_write_ret;
+	write(fd, "---------------------------\n", 28);
 	write(fd, "write:    ", 10);
 	write_ret = write(fd, buf, count);
+	dprintf(fd, "write_ret:    %zu\n", write_ret);
 	write(fd, "ft_write: ", 10);
 	ft_write_ret = ft_write(fd, buf, count);
+	dprintf(fd, "ft_write_ret: %zu\n", ft_write_ret);
+	write(fd, "---------------------------\n", 28);
 }
 
 void test_ft_write()
 {
 	char	s1[] = "hello\n";
+	write(1, "STDOUT 'hello\\n'\n", 17);
 	test_ft_write_block(1, s1, ft_strlen(s1));
+	write(2, "STDERR 'hello\\n'\n", 17);
 	test_ft_write_block(2, s1, ft_strlen(s1));
-	
+	write(1, "Terminator in between\n", 22);
     char binary[] = {'a', 'b', '\0', 'c', '\n'};
 	test_ft_write_block(1, binary, sizeof(binary));
+	write(1, "A bit longer string\n", 20);
     char longmsg[] = "The quick brown fox jumps over the lazy dog\n";
 	test_ft_write_block(1, longmsg, ft_strlen(longmsg));
+	write(1, "Empty\n", 6);
 	test_ft_write_block(1, "", 0);
 
 }
