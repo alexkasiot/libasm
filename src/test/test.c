@@ -133,8 +133,8 @@ void test_ft_write()
 
 static void test_ft_read()
 {
-	size_t read_ret;
-	size_t ft_read_ret;
+	ssize_t read_ret;
+	ssize_t ft_read_ret;
 	char test[100] = {0};
 	ft_write(1, "read:    ", 9);
 	read_ret = read(0, test, 100);
@@ -147,6 +147,14 @@ static void test_ft_read()
 	ft_read_ret = ft_read(0, test, 100);
 	ft_write(1, test, ft_strlen(test));
 	dprintf(1, "ft_read_ret: %zu\n", ft_read_ret);
+
+	write(1, "---------------------------\n", 28);
+	write(1, "Error\n", 6);
+	write(1, "---------------------------\n", 28);
+	read_ret = read(10, "", 1);
+	printf("read_ret:    %zd\nerrno: %d (%s)\n", read_ret, errno, strerror(errno));
+	ft_read_ret = ft_read(10, "", 1);
+	printf("ft_read_ret: %zd\nerrno: %d (%s)\n", ft_read_ret, errno, strerror(errno));
 }
 
 int main(int argc, const char *argv[])

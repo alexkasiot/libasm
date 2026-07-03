@@ -8,7 +8,6 @@ ft_strlen:
 	je .done
 	inc rax
 	jmp .loop
-
 .done:
 	ret
 

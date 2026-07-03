@@ -9,7 +9,6 @@ ft_write:
 	test rax, rax
 	js .error
 	ret
-
 .error:
 	neg rax
 	mov rdi, rax
