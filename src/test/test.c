@@ -107,7 +107,7 @@ static void test_ft_write_block(int fd, const void *buf, size_t count)
 	write(fd, "---------------------------\n", 28);
 }
 
-void test_ft_write()
+static void test_ft_write()
 {
 	char s1[] = "hello\n";
 	write(1, "STDOUT 'hello\\n'\n", 17);
