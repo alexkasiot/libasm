@@ -157,6 +157,75 @@ static void test_ft_read()
 	printf("ft_read_ret: %zd\nerrno: %d (%s)\n", ft_read_ret, errno, strerror(errno));
 }
 
+static void test_ft_strdup_block(const char* src)
+{
+	char	*dup;
+	char	*ft_dup;
+	size_t	dup_len;
+	size_t	ft_dup_len;
+	
+	dup = strdup(src);
+	ft_dup = ft_strdup(src);
+	/* Quick test for malloc "fail" */
+	// if (ft_dup == NULL)
+	// {
+	// 	free(dup);
+	// 	printf("errno: %d (%s)\n", errno, strerror(errno));
+	// 	exit(1);
+	// }
+	dup_len = ft_strlen(dup);
+	ft_dup_len = ft_strlen(ft_dup);
+	if (dup_len <= 100)
+	{
+		printf("-------------------------\n%s\n-------------------------\n", src);
+		printf("strdup:    %s\n", dup);
+		printf("ft_strdup: %s\n", ft_dup);
+	}
+	else
+	{
+		printf("-------------------------\nsome big string\n-------------------------\n");
+		printf("strdup_len:    %zu\n", dup_len);
+		printf("ft_strdup_len: %zu\n", ft_dup_len);
+	}
+	free(dup);
+	dup = NULL;
+	free(ft_dup);
+	ft_dup = NULL;
+}
+
+static void test_ft_strdup()
+{
+	test_ft_strdup_block("");
+	test_ft_strdup_block("a");
+	test_ft_strdup_block("hello");
+	test_ft_strdup_block("hello world");
+	test_ft_strdup_block(" ");
+	test_ft_strdup_block("\n");
+	test_ft_strdup_block("abc\0def");
+	test_ft_strdup_block("\t");
+	test_ft_strdup_block("\xFF\xFE");
+	test_ft_strdup_block("é");
+	test_ft_strdup_block("こんにちは");
+	/* Stress test: allocate 1_000_000 'a's and compare */
+	{
+		size_t n = 1000000;
+		char *big = malloc(n + 1);
+		if (big)
+		{
+			memset(big, 'a', n);
+			big[n] = '\0';
+			test_ft_strdup_block(big);
+			free(big);
+		}
+		else
+		{
+			printf("skip big test: malloc failed\n");
+		}
+	}
+
+
+}
+
 int main(int argc, const char *argv[])
 {
 	if (argc != 2)
@@ -175,6 +244,8 @@ int main(int argc, const char *argv[])
 		test_ft_write();
 	else if (strcmp(argv[1], "ft_read") == 0)
 		test_ft_read();
+	else if (strcmp(argv[1], "ft_strdup") == 0)
+		test_ft_strdup();
 	else
 	{
 		write(1, "Usage ./test [function_name]\n", 29);
