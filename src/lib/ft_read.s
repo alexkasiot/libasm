@@ -11,9 +11,10 @@ ft_read:
 	ret
 .error:
 	neg rax
-	mov rdi, rax
+	push rax
 	call __errno_location
-	mov [rax], rdi
+	pop rdx
+	mov dword [rax], edx
 	mov rax, -1
 	ret
 
