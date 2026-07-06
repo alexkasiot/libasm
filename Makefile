@@ -6,7 +6,7 @@
 #    By: akasiota <akasiota@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2026/05/21 14:52:57 by akasiota      #+#    #+#                  #
-#    Updated: 2026/07/03 18:12:26 by akasiota      ########   odam.nl          #
+#    Updated: 2026/07/06 13:11:32 by akasiota      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,7 @@ $(TESTOBJFILE): $(TESTSRCFILE) | $(TESTOBJDIR)
 	$(CC) -c $(CCFLAGS) $< -o $@
 
 clean:
-	rm -f $(TESTOBJFILE)
-	rm -f $(LIBOBJFILES)
+	rm -rf obj/
 
 fclean: clean
 	rm -f $(TESTMAIN)
