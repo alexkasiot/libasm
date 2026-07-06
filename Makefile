@@ -6,7 +6,7 @@
 #    By: akasiota <akasiota@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2026/05/21 14:52:57 by akasiota      #+#    #+#                  #
-#    Updated: 2026/07/06 13:11:32 by akasiota      ########   odam.nl          #
+#    Updated: 2026/07/06 13:38:30 by akasiota      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,15 @@ TESTMAIN := test.out
 ASM := nasm
 CC := cc
 
-ASMFLAGS := -f elf64 #-w+all
+ASMFLAGS := -f elf64 -w+all
 CCFLAGS := -Wall -Wextra -Werror -I.
 
 LIBSRCDIR := src/lib
 TESTSRCDIR := src/test
 LIBOBJDIR := obj/lib
 TESTOBJDIR := obj/test
+
+HFILE := libasm.h
 
 LIBSRCFILES := ft_read.s \
 			ft_strcmp.s \
@@ -53,7 +55,7 @@ $(TESTMAIN): $(TESTOBJFILE) $(NAME)
 $(LIBOBJDIR)/%.o: $(LIBSRCDIR)/%.s | $(LIBOBJDIR)
 	$(ASM) $(ASMFLAGS) $< -o $@
 
-$(TESTOBJFILE): $(TESTSRCFILE) | $(TESTOBJDIR)
+$(TESTOBJFILE): $(TESTSRCFILE) $(HFILE) | $(TESTOBJDIR)
 	$(CC) -c $(CCFLAGS) $< -o $@
 
 clean:

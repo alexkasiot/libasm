@@ -139,14 +139,14 @@ static void test_ft_read()
 	ft_write(1, "read:    ", 9);
 	read_ret = read(0, test, 100);
 	ft_write(1, test, ft_strlen(test));
-	dprintf(1, "read_ret:    %zu\n", read_ret);
+	dprintf(1, "read_ret:    %zd\n", read_ret);
 
 	memset(test, 0, 100);
 
 	ft_write(1, "ft_read: ", 9);
 	ft_read_ret = ft_read(0, test, 100);
 	ft_write(1, test, ft_strlen(test));
-	dprintf(1, "ft_read_ret: %zu\n", ft_read_ret);
+	dprintf(1, "ft_read_ret: %zd\n", ft_read_ret);
 
 	write(1, "---------------------------\n", 28);
 	write(1, "Error\n", 6);
@@ -165,14 +165,18 @@ static void test_ft_strdup_block(const char* src)
 	size_t	ft_dup_len;
 	
 	dup = strdup(src);
+	if (dup == NULL)
+	{
+		printf("errno: %d (%s)\n", errno, strerror(errno));
+		exit(errno);
+	}
 	ft_dup = ft_strdup(src);
-	/* Quick test for malloc "fail" */
-	// if (ft_dup == NULL)
-	// {
-	// 	free(dup);
-	// 	printf("errno: %d (%s)\n", errno, strerror(errno));
-	// 	exit(1);
-	// }
+	if (ft_dup == NULL)
+	{
+		free(dup);
+		printf("errno: %d (%s)\n", errno, strerror(errno));
+		exit(errno);
+	}
 	dup_len = ft_strlen(dup);
 	ft_dup_len = ft_strlen(ft_dup);
 	if (dup_len <= 100)
